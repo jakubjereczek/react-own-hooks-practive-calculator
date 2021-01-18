@@ -1,21 +1,25 @@
 body {
   margin: 0;
-  font-family: 'Roboto', sans-serif;
+  font-family: 'Roboto', sans-serif;;
   min-height: 100vh;
 }
+
 * {
   font-size: 16px;
-
+  box-sizing: border-box;
 }
+
 .app {
   display: flex;
   min-height: 100vh;
+  height: auto;
   min-width: 320px;
 }
 
 .row {
   flex-basis: 50%;
   min-height: 100%;
+  height: auto;
 }
 
 /* lewa część */
@@ -35,7 +39,7 @@ body {
 }
 
 .numbers {
-  width: 90%;
+  width: 80%;
   flex-direction: column;
 }
 
@@ -44,8 +48,8 @@ body {
 }
 
 .numbers input {
-  width: 90%;
-  height: 40px;
+  width: calc(90% + 10px);
+  height: 60px;
   line-height: 40px;
   padding: 10px 5px;
   border-radius: 10px;
@@ -53,13 +57,19 @@ body {
   border: 1px solid white;
   box-shadow: 5px 5px 10px 2px rgba(0,0,0,0.25);
   font-size: 1.5rem;
+  transition: .6s;
+}
+
+.numbers input:hover {
+  border: 2px solid blueviolet;
 }
 
 .operators {
   margin: 10px 0;
-  width: 90%;
+  width: 80%;
   flex-direction: row;
   flex-wrap: wrap;
+  height: auto;
 }
 
 .box {
@@ -76,6 +86,12 @@ body {
   box-shadow: 5px 5px 10px 2px rgba(0,0,0,0.25);
   background-color: white;
   text-align: center;
+  transition: .6s;
+}
+
+.box:hover {
+  background-color: blueviolet;
+  color: white;
 }
 
 .box.active {
@@ -97,7 +113,6 @@ body {
 }
 
 .result {
-  height: 30%;
   width: 80%;
   text-align: center;
 }
@@ -128,10 +143,11 @@ body {
   }
   .row:nth-of-type(2) {
     flex-basis: 40%;
+    flex-grow: 1;
   }
 
   .numbers input {
-    height: 20px;
+    height: 40px;
   }
 
   .box {
