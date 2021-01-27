@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 
-export function useSelectOperation(props) {
+export default function useSelectOperation(props) {
     const { operations } = props;
 
     const [selectedOperation, setSelectedOperation] = useState({});
@@ -16,11 +16,8 @@ export function useSelectOperation(props) {
 
     useEffect(() => {
         const currentlyOperations = availableOperations.map(element => {
-            if (element.id == selectedOperation.id) {
-                element.active = true;
-            } else {
-                element.active = false;
-            }
+            element.id == selectedOperation.id ? element.active = true : element.active = false;
+
             return {
                 ...element,
             }
@@ -28,5 +25,5 @@ export function useSelectOperation(props) {
         setAvailableOperations(currentlyOperations);
     }, [selectedOperation]);
 
-    return [setOperation, availableOperations];
+    return [setOperation, availableOperations, selectedOperation];
 }
