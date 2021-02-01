@@ -10,19 +10,26 @@ export default function useTotalSum(activeInputs, selectedOperation) {
     const { inputValues } = useInputsValueContext();
 
     function countTheSum() {
-        let sum = 1;
+        let sum = 0;
         console.log(inputValues)
         if (selectedOperation != null) {
             switch (selectedOperation.name) {
                 case "dodawanie":
                     inputValues.forEach(input => {
-                        console.log(sum)
                         sum += input.value;
                     });
-                case "-":
+                    break;
+                case "odejmowanie":
+                    for (let i = 0; i < Object.keys(inputValues).length; i++) {
+                        if (i == 0) sum = inputValues[i].value;
+                        else sum -= inputValues[i].value;
+                    }
+                    break;
                 case "*":
                 case ":":
                 case "√":
+                    sum = Math.sqrt(inputValues[0].value);
+                    break;
                 case "||":
                 case "log":
             }

@@ -39,10 +39,22 @@ export const InputsValueProvider = ({ children }) => {
         setInputValues([...inputValuesCopy]);
     }
 
+    const clearValue = (id) => {
+        let inputValuesCopy = inputValues;
+        inputValuesCopy.forEach(element => {
+            if (element.id > id) {
+                element.value = 0;
+            }
+        });
+        setInputValues([...inputValuesCopy]);
+
+    }
+
     const values = {
         inputValues,
         setInputValues,
         newValue,
+        clearValue
     }
 
     return <InputsValuesConext.Provider value={values}>

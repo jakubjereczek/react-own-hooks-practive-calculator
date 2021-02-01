@@ -2,6 +2,7 @@ import './App.css';
 import React from 'react';
 import { useSelectOperation, useTotalSum } from './hooks';
 import { Inputs } from './components';
+import { useInputsValueContext } from './contexts/InputsValueContext'
 
 import { useMemo, useState } from 'react';
 
@@ -16,6 +17,12 @@ const operations = [
 ]
 
 function App() {
+
+  const { clearValue } = useInputsValueContext();
+
+  // to do
+  // liczenie sumy na biezaco,
+  // przy przejsciu do pojedynczych tracimy jedna wartosc
 
   const [setOperation, availableOperations, selectedOperation] = useSelectOperation({ operations });
 
@@ -34,14 +41,20 @@ function App() {
   // Jesli zaznaczymy pierw, war. bez. lub log = 1 input. Reszty 2. 
   let inputsNumbers = useMemo(() => selectedOperation.id > 3 ? 1 : 2, [selectedOperation]);
 
-  // to jeszcze nie dziala
-  const [totalSum, refActiveInputs, refSum] = useTotalSum(inputsNumbers, selectedOperation);
+  const [totalSum, refActiveInputs] = useTotalSum(inputsNumbers, selectedOperation);
+
 
   let activeInputs = useMemo(() => {
     refActiveInputs(inputsNumbers + addedInputs)
 
+    //aktualnianie ilosci inputow - czyszczenie zawartosci niepotrzebnych
+    // Od id wzwyz
+    let numbers = ((inputsNumbers + addedInputs) - 1);
+    clearValue(numbers);
     return inputsNumbers;
   }, [addedInputs, inputsNumbers]);
+
+
 
   return (
     <div className="app">
