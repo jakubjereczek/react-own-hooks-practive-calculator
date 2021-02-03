@@ -33,7 +33,6 @@ function App() {
     const classes = !operation.active ? "box" : "box active";
     return (<div key={operation.id} className={classes} onClick={() => {
       setOperation(operation)
-      //setAddedInput(0)
     }}>{operation.name}</div>
     )
   });
@@ -41,7 +40,7 @@ function App() {
   // Jesli zaznaczymy pierw, war. bez. lub log = 1 input. Reszty 2. 
   let inputsNumbers = useMemo(() => selectedOperation.id > 3 ? 1 : 2, [selectedOperation]);
 
-  const [totalSum, refActiveInputs] = useTotalSum(inputsNumbers, selectedOperation);
+  const [totalSum, refActiveInputs, refreshAndReturnSum] = useTotalSum(inputsNumbers, selectedOperation);
 
 
   let activeInputs = useMemo(() => {
@@ -50,11 +49,18 @@ function App() {
     //aktualnianie ilosci inputow - czyszczenie zawartosci niepotrzebnych
     // Od id wzwyz
     let numbers = ((inputsNumbers + addedInputs) - 1);
-    clearValue(numbers);
+    console.log("numbers " + numbers + "inputs " + inputsNumbers, "added" + addedInputs)
+    if (inputsNumbers != 1)
+      clearValue(numbers);
     return inputsNumbers;
   }, [addedInputs, inputsNumbers]);
 
+  const inputs = () => <Inputs count={inputsNumbers} type="number" />
 
+  const totalSumRefreshed = useMemo(() => {
+    console.log('OSWIEZAM SUME ' + totalSum + ", " + refreshAndReturnSum());
+    return refreshAndReturnSum();
+  }, [inputs])
 
   return (
     <div className="app">
@@ -63,7 +69,7 @@ function App() {
           <h2>Uzupełnij liczby, które potrzebne są do obliczenia działania</h2>
           {activeInputs = 1}
           {inputsNumbers == 1 ? (
-            <Inputs count={inputsNumbers} type="number" />
+            { inputs }
           ) : (
               <React.Fragment>
                 {(addedInputs >= 1) ?
@@ -88,7 +94,7 @@ function App() {
       <div class="row">
         <div class="result">
           <h2>Wynik działania jest równy</h2>
-          <h3>{totalSum}</h3>
+          <h3>{totalSumRefreshed}</h3>
         </div>
       </div>
     </div >

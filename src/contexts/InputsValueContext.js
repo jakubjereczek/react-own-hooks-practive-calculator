@@ -25,7 +25,6 @@ export const InputsValueProvider = ({ children }) => {
         let inputValuesCopy = inputValues;
 
         inputValuesCopy.forEach(element => {
-            console.log(id, element.id)
             if (element.id == id) {
                 exist = true;
                 element.id = newElement.id;
@@ -44,7 +43,9 @@ export const InputsValueProvider = ({ children }) => {
         inputValuesCopy.forEach(element => {
             if (element.id > id) {
                 element.value = 0;
+                console.log("USUWAM id: " + element.id)
             }
+            console.log("id: " + element.id)
         });
         setInputValues([...inputValuesCopy]);
 

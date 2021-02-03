@@ -11,7 +11,6 @@ export default function useTotalSum(activeInputs, selectedOperation) {
 
     function countTheSum() {
         let sum = 0;
-        console.log(inputValues)
         if (selectedOperation != null) {
             switch (selectedOperation.name) {
                 case "dodawanie":
@@ -41,7 +40,12 @@ export default function useTotalSum(activeInputs, selectedOperation) {
         setActiveInputsCount(value)
     }
 
-    useEffect(() => setTotalSum(countTheSum()), [activeInputs, selectedOperation]);
+    const refreshAndReturnSum = () => {
+        return countTheSum();
+    }
 
-    return [totalSum, refActiveInputs];
+    useEffect(() => setTotalSum(countTheSum()),
+        [activeInputs, selectedOperation]);
+
+    return [totalSum, refActiveInputs, refreshAndReturnSum];
 }
