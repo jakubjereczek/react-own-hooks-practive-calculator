@@ -20,9 +20,6 @@ function App() {
 
   const { clearValue } = useInputsValueContext();
 
-  // to do
-  // liczenie sumy na biezaco,
-  // przy przejsciu do pojedynczych tracimy jedna wartosc
 
   const [setOperation, availableOperations, selectedOperation] = useSelectOperation({ operations });
 
@@ -42,7 +39,6 @@ function App() {
 
   const [totalSum, refActiveInputs, refreshAndReturnSum] = useTotalSum(inputsNumbers, selectedOperation);
 
-
   let activeInputs = useMemo(() => {
     refActiveInputs(inputsNumbers + addedInputs)
 
@@ -55,10 +51,11 @@ function App() {
     return inputsNumbers;
   }, [addedInputs, inputsNumbers]);
 
-  const inputs = () => <Inputs count={inputsNumbers} type="number" />
+  const inputs = (
+    <Inputs count={inputsNumbers} type="number" />
+  )
 
   const totalSumRefreshed = useMemo(() => {
-    console.log('OSWIEZAM SUME ' + totalSum + ", " + refreshAndReturnSum());
     return refreshAndReturnSum();
   }, [inputs])
 
@@ -67,21 +64,24 @@ function App() {
       <div class="row">
         <div class="numbers">
           <h2>Uzupełnij liczby, które potrzebne są do obliczenia działania</h2>
-          {activeInputs = 1}
+          {console.log(inputsNumbers)
+          }
           {inputsNumbers == 1 ? (
-            { inputs }
+            inputs
           ) : (
               <React.Fragment>
-                {(addedInputs >= 1) ?
-                  <button onClick={() => {
-                    setAddedInput(addedInputs - 1);
-                  }}>-1</button> : null
-                }
-                {(addedInputs != maxAddedInput) ? (
-                  <button onClick={() => {
-                    setAddedInput(addedInputs + 1);
-                  }}>+1</button>
-                ) : null}
+                <div class="buttons">
+                  {(addedInputs >= 1) ?
+                    <button onClick={() => {
+                      setAddedInput(addedInputs - 1);
+                    }}>-1</button> : null
+                  }
+                  {(addedInputs != maxAddedInput) ? (
+                    <button onClick={() => {
+                      setAddedInput(addedInputs + 1);
+                    }}>+1</button>
+                  ) : null}
+                </div>
                 {activeInputs = inputsNumbers + addedInputs}
                 <Inputs count={activeInputs} type="number" />
               </React.Fragment>
@@ -97,7 +97,7 @@ function App() {
           <h3>{totalSumRefreshed}</h3>
         </div>
       </div>
-    </div >
+    </div>
   );
 }
 

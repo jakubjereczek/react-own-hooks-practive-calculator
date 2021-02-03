@@ -20,7 +20,7 @@ export const InputsValueProvider = ({ children }) => {
         let exist = false;
         const newElement = {
             id: parseInt(id),
-            value: parseInt(value)
+            value: parseFloat(value)
         }
         let inputValuesCopy = inputValues;
 
@@ -43,9 +43,7 @@ export const InputsValueProvider = ({ children }) => {
         inputValuesCopy.forEach(element => {
             if (element.id > id) {
                 element.value = 0;
-                console.log("USUWAM id: " + element.id)
             }
-            console.log("id: " + element.id)
         });
         setInputValues([...inputValuesCopy]);
 

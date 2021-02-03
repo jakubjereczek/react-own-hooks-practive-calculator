@@ -9,31 +9,43 @@ export default function useTotalSum(activeInputs, selectedOperation) {
 
     const { inputValues } = useInputsValueContext();
 
+    console.log(inputValues);
+
     function countTheSum() {
         let sum = 0;
         if (selectedOperation != null) {
-            switch (selectedOperation.name) {
-                case "dodawanie":
-                    inputValues.forEach(input => {
-                        sum += input.value;
-                    });
-                    break;
-                case "odejmowanie":
-                    for (let i = 0; i < Object.keys(inputValues).length; i++) {
+            for (let i = 0; i < Object.keys(inputValues).length; i++) {
+                switch (selectedOperation.name) {
+                    case "dodawanie":
+                        sum += inputValues[i].value
+                        break;
+                    case "odejmowanie":
                         if (i == 0) sum = inputValues[i].value;
                         else sum -= inputValues[i].value;
-                    }
-                    break;
-                case "*":
-                case ":":
-                case "√":
-                    sum = Math.sqrt(inputValues[0].value);
-                    break;
-                case "||":
-                case "log":
+                        break;
+                    case "mnożenie":
+                        if (i == 0) sum = inputValues[i].value;
+                        else sum *= inputValues[i].value;
+                        break;
+                    case "dzielenie":
+                        if (i == 0) sum = inputValues[i].value;
+                        else sum /= inputValues[i].value;
+                        break;
+                    case "pierwiastek":
+                        sum = Math.sqrt(inputValues[0].value);
+                        break;
+                    case "pierwiastek":
+                        sum = Math.abs(inputValues[0].value);
+                        break;
+                    case "logarytm naturalny":
+                        sum = Math.log10(inputValues[0].value);
+                        break;
+                }
+
             }
+
         }
-        return sum;
+        return sum.toFixed(2);
     }
 
     const refActiveInputs = (value) => {

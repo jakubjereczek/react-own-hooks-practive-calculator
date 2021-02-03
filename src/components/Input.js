@@ -11,23 +11,27 @@ const Input = (props) => {
     const changeInputHandler = (event) => {
         let value = event.target.value;
         setValue(value);
+
         const obj = {
             id: event.target.className,
-            value: value
+            value: value || 0
         }
         newValue(obj);
     };
 
-    // hmm
+    // Przypisanie wartosci 
     useEffect(() => {
+        let exist = false;
         inputValues.forEach(element => {
             if (element.id == id) {
-                console.log('zwracam ' + element.value);
-                return setValue(element.value);
+                exist = true;
+                setValue(element.value);
             }
-        });
-        //setValue(0);
 
+        });
+        if (!exist) {
+            setValue(0)
+        }
     }, []);
 
     return (
